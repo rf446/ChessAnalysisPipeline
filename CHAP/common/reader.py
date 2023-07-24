@@ -31,7 +31,7 @@ class BinaryFileReader(Reader):
 
 class NexusReader(Reader):
     """Reader for NeXus files"""
-    def read(self, filename, nxpath='/'):
+    def read(self, filename, nxpath='/', idx=(), nxmemory=2000):
         """Return the NeXus object stored at `nxpath` in the nexus
         file `filename`.
 
@@ -46,9 +46,10 @@ class NexusReader(Reader):
         :rtype: nexusformat.nexus.NXobject
         """
 
-        from nexusformat.nexus import nxload
+        from nexusformat.nexus import nxload, nxsetmemory
 
-        nxobject = nxload(filename)[nxpath]
+        nxsetmemory(nxmemory)
+        nxobject = nxload(filename)[nxpath][idx]
         return nxobject
 
 
