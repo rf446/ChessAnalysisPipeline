@@ -6,6 +6,7 @@ class ElementConcentrationMapProcessor(Processor):
     """
     def process(self,data):
         """Return map of element concentrations."""
+
         print data
         return data
 

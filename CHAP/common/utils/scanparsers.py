@@ -637,7 +637,7 @@ class FMBXRFScanParser(FMBLinearScanParser):
         scan_step = self.get_scan_step(scan_step_index)
         with File(detector_file) as h5_file:
             detector_data = \
-                h5_file['/entry/instrument/detector/data'][scan_step[0]]
+                h5_file['/entry/instrument/detector/data'][scan_step[1]]
         return detector_data
 
 
