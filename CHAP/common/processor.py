@@ -671,6 +671,23 @@ class StrainAnalysisProcessor(Processor):
         return strain_analysis_config
 
 
+class SumProcessor(Processor):
+    """A Processor to return the sum of an input array"""
+
+    def process(self, data, axis=None):
+        """Return a sum of the input array in `data`.
+
+        :param data: input array to sum
+        :type data: PipelineData
+        :param axis: index of axis or axes to sum along, defaults to None
+        :type axis: None or int or tuple of ints, optional
+        :return: sum of the input array
+        :rtype: np.ndarray
+        """
+        import numpy as np
+        return np.sum(self.unwrap_pipelinedata(data), axis=axis)
+
+
 class XarrayToNexusProcessor(Processor):
     """A Processor to convert the data in an `xarray` structure to an
     `nexusformat.nexus.NXdata`.
