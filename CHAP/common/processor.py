@@ -379,11 +379,13 @@ class NexusToNumpyProcessor(Processor):
         :rtype: numpy.ndarray
         """
 
-        from nexusformat.nexus import NXdata
+        from nexusformat.nexus import NXdata, NXfield
 
         data = self.unwrap_pipelinedata(data)
 
-        if isinstance(data, NXdata):
+        if isinstance(data, NXfield):
+            return data.nxdata
+        elif isinstance(data, NXdata):
             default_data = data
         else:
             default_data = data.plottable_data
