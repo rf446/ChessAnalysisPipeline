@@ -22,7 +22,7 @@ class ElementConcentrationMapProcessor(Processor):
         config = ConfigDict.ConfigDict()
         config.read(pymca_fit_config_file)
         
-        return self.spectra_to_mass_fraction_maps(config, data, monitor)
+        return self.spectra_to_mass_fraction_maps(config, data[0]['data'], monitor)
     
     def spectrum_to_mass_fractions(self, config, spectrum, monitor):
         """ Return a dictionary of mass fractions by element.
@@ -37,7 +37,7 @@ class ElementConcentrationMapProcessor(Processor):
             element concentration at one point.
         :rtype: dict
         """
-        from PyMca5.PyMcaPhysics import ClassMcaTheory
+        from PyMca5.PyMcaPhysics.xrf.ClassMcaTheory import McaTheory
         from PyMca5.PyMcaPhysics.xrf.ConcentrationsTool import ConcentrationsTool
     
         advanced_fit = McaTheory(config=config)
@@ -84,7 +84,7 @@ class ElementConcentrationMapProcessor(Processor):
             point on the map for each element.
         :rtype: nexusformat.nexus.NXroot
         """
-        from nexusformat.nexus import (NXdata, NXprocess, NXfield, NXroot, NXentry
+        from nexusformat.nexus import (NXdata, NXprocess, NXfield, NXroot, NXentry)
         import numpy as np
         from json import dumps
         
