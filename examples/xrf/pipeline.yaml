@@ -1,0 +1,37 @@
+config:
+  log_level: debug
+
+pipeline:
+
+  # If needed: collect raw detector data
+  # # Read raw data location config
+  # - common.YAMLReader:
+  #     filename: examples/xrf/map.yaml
+  #     schema: MapConfig
+
+  # # Gather raw detector data
+  # - common.RawDetectorDataMapProcessor:
+  #     detector_name: vortex
+  #     detector_shape: [4, 4096]
+
+  # If raw detector data already collected: read it in from nexus file
+  - common.NexusReader:
+      filename: examples/xrf/map_detector_data.nxs
+      nxpath: /fresh_coarse_2/instrument/detector/data/raw
+      nxmemory: 2000000
+
+  # Isolate map of detector data
+  - common.NexusToNumpyProcessor
+
+  # Sum spectra across all 4 detector elements
+  - common.SumProcessor:
+      axis: 2
+
+  # Process element concentrations
+  - xrf.ElementConcentrationMapProcessor: 
+      pymca_fit_config_file: 
+
+  # Write to file
+  - common.NexusWriter:
+      filename: examples/xrf/element_maps.nxs
+      force_overwrite: true
